@@ -1,2 +1,3 @@
 .idea/
 mysql_config.py
+praw_config.py
