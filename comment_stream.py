@@ -33,24 +33,28 @@ def process_comment(comment):
             comment.reply(":(")
 
     if not comment.is_root and hasattr(comment, 'parent'):
-        print("Processing sub comment..")
-
-        process_sub_comment(comment, comment.body)
+        process_sub_comment(comment)
 
 
 def process_sub_comment(comment):
     parent = comment.parent()
-    if hasattr(parent, 'author'):
-        print("Comment has parent and author attr")
-        if re.search("JordyDiedForThis", parent.author.name, re.IGNORECASE):
+    replied = False
+    if hasattr(parent.author, "name"):
+        if re.search("JordyDiedForThis", parent.author.name, re.IGNORECASE) and not db.has_replied(comment.id):
             print("Comment is response to bot")
             if re.search("good bot", comment.body, re.IGNORECASE):
+                replied = True
                 IMG_SRC = random.choice(tuple(THUMBS))
                 comment.reply("[:')]({})".format(IMG_SRC))
+
             else:
+                replied = True
                 if re.search("bad bot", comment.body, re.IGNORECASE) or re.search("sad bot", comment.body, re.IGNORECASE):
                     IMG_SRC = random.choice(tuple(SADS))
                     comment.reply("[:'(]({})".format(IMG_SRC))
+
+            if replied:
+                db.add_reply(comment.id)
 
 
 main()
