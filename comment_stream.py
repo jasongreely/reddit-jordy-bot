@@ -2,7 +2,7 @@ import praw
 import re
 import db
 
-TARGET_SUB = "crumbumsandbox"
+TARGET_SUB = "nfl"
 
 reddit = praw.Reddit('bot1')
 
