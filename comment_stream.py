@@ -48,8 +48,8 @@ def process_sub_comment(comment):
                 comment.reply("[:')]({})".format(IMG_SRC))
 
             else:
-                replied = True
                 if re.search("bad bot", comment.body, re.IGNORECASE) or re.search("sad bot", comment.body, re.IGNORECASE):
+                    replied = True
                     IMG_SRC = random.choice(tuple(SADS))
                     comment.reply("[:'(]({})".format(IMG_SRC))
 
